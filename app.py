@@ -10,8 +10,6 @@ import streamlit as st
 start= '2010-01-01'
 end='2019-12-31'
 
-
-
 st.title('Stock Market Prediction Using Machine Learning')
 
 user_input=st.text_input('Enter Stock Ticker','AAPL')
