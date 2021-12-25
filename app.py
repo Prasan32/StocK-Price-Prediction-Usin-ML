@@ -6,17 +6,18 @@ import pandas_datareader as data
 from keras.models import load_model
 import streamlit as st
 
-start= '2010-01-01'
-end='2019-12-31'
+start= '2011-01-01'
+end='2021-12-20'
 
 st.title('Stock Market Prediction Using Machine Learning')
 
-user_input=st.text_input('Enter Stock Ticker','AAPL')
+# user_input=st.text_input('Enter Stock Ticker','AAPL')
+user_input=st.selectbox('Enter Stock Ticker',('AAPL','TSLA','AMD','NVDA','INTC','GOOG'))
 df=data.DataReader(user_input, 'yahoo', start, end)
 
 
 # Describing Data
-st.subheader('Data from 2010-2019')
+st.subheader('Data from 2011-2021')
 st.write(df.describe())
 
 # Visualisation
