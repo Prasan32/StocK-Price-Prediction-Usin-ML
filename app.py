@@ -6,7 +6,6 @@ import pandas_datareader as data
 from keras.models import load_model
 import streamlit as st
 
-
 start= '2010-01-01'
 end='2019-12-31'
 
