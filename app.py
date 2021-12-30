@@ -187,8 +187,7 @@ if rad=='Contact':
             # st.markdown('<h5>Please fill all the fields<h5>',unsafe_allow_html=True)
             st.error('Please fill all the fields')
         else:
-           st.markdown('<h3 style="font-family:sans-serif; color:#8271D2;">Thank you for your feedback!</h3>', unsafe_allow_html=True)
-        
+           st.markdown('<h3 style="font-family:sans-serif; color:#8271D2;">Thank you for your feedback!</h3>', unsafe_allow_html=True)  
            df=pd.read_json('response.json')
            df = df.append(d, ignore_index = True)
            open('response.json', 'w').write(df.to_json())
