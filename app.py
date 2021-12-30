@@ -32,7 +32,7 @@ st.markdown(f""" <style>
 rad=st.sidebar.selectbox('Navigation',('Home','Stock Price Prediction','Contact',))
 
 i=1
-while i<18:
+while i<14:
     st.sidebar.write("")
     i+=1
 
