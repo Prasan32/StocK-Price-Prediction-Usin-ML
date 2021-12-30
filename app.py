@@ -8,7 +8,6 @@ import time
 from PIL import Image
 from streamlit.elements import form
 from streamlit.legacy_caching.caching import cache
-import psycopg2
 
 st.set_page_config(page_title='Stock Price Prediction', page_icon="🤑")
 
