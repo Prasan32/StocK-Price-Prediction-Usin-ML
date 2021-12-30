@@ -8,6 +8,7 @@ import time
 from PIL import Image
 from streamlit.elements import form
 from streamlit.legacy_caching.caching import cache
+import psycopg2
 
 st.set_page_config(page_title='Stock Price Prediction', page_icon="🤑")
 
@@ -170,20 +171,19 @@ if rad=='Contact':
     with st.form("my_form",clear_on_submit=True):
        name=st.text_input(label='Name:',max_chars=50,placeholder='Enter your name')    
        email=st.text_input(label='Email:',placeholder='Enter your email address')
-       msg=st.text_area(label='Message:',height=100)
-       slider_val = st.slider("Rate us (1 to 5)",0,5,value=3)
+       message=st.text_area(label='Message:',height=100)
+       rating = st.slider("Rate us (1 to 5)",0,5,value=3)
     #    checkbox_val = st.checkbox("Form checkbox")
 
     # Every form must have a submit button.
        submitted = st.form_submit_button("Submit")
     if submitted:
-        # st.write("Rating", slider_val,"name",name)
         d = {"Name":name, 
             "Email":email,
-            "Message":msg,
-            "Rating":slider_val,}
+            "Message":message,
+            "Rating":rating,}
 
-        if name=="" and email=="" and msg=="":
+        if name=="" and email=="" and message=="":
             # st.markdown('<h5>Please fill all the fields<h5>',unsafe_allow_html=True)
             st.error('Please fill all the fields')
         else:
@@ -191,6 +191,7 @@ if rad=='Contact':
            df=pd.read_json('response.json')
            df = df.append(d, ignore_index = True)
            open('response.json', 'w').write(df.to_json())
+
 
 
          
