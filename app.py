@@ -17,10 +17,10 @@ st.set_page_config(page_title='Stock Price Prediction', page_icon="🤑")
 start= '2011-01-01'
 end='2021-12-20'
 
-st.markdown(""" <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style> """, unsafe_allow_html=True)
+# st.markdown(""" <style>
+# #MainMenu {visibility: hidden;}
+# footer {visibility: hidden;}
+# </style> """, unsafe_allow_html=True)
 
 padding = 0
 st.markdown(f""" <style>
