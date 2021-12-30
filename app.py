@@ -31,10 +31,10 @@ st.markdown(f""" <style>
 
 rad=st.sidebar.selectbox('Navigation',('Home','Stock Price Prediction','Contact',))
 
-# st.sidebar.write("Visit Developer Profile:[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
+st.sidebar.write("Visit Developer Profile:[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
 
-new_title = '<p style="font-family:sans-serif; color:#8271D2; font-size: 15px;margin-top: 320px"><b>Visit Developer Profile:</b><br><a style="text-decoration:none;color:#8271D2" href="https://github.com/Prasan32">Prasanna KB</a></p>'
-st.sidebar.markdown(new_title, unsafe_allow_html=True)
+# new_title = '<p style="font-family:sans-serif; color:#8271D2; font-size: 15px;margin-top: 320px"><b>Visit Developer Profile:</b><br><a style="text-decoration:none;color:#8271D2" href="https://github.com/Prasan32">Prasanna KB</a></p>'
+# st.sidebar.markdown(new_title, unsafe_allow_html=True)
 
 if rad=='Home':
     # json=pd.read_json('89023-loading-circles.json')
