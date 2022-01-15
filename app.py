@@ -1,3 +1,4 @@
+from logging import PlaceHolder
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -68,101 +69,107 @@ if rad=='Stock Price Prediction':
   new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
   st.markdown(new_title, unsafe_allow_html=True)
 
-  # user_input=st.text_input('Enter Stock Ticker','AAPL')
-  user_input=st.selectbox('Choose Stock Ticker',('','AAPL','TSLA','AMD','NVDA','INTC','GOOG'))
-  if user_input=='':
-    st.warning('Please select a stock ticker')
-  else:
-    df=data.DataReader(user_input, 'yahoo', start, end)
+
+  with st.form("my_form1"):
+    user_input=st.selectbox('Choose Stock Ticker',('','AAPL','TSLA','AMD','NVDA','INTC','GOOG'))
+    col1,col2=st.columns(2)
+    start=col1.selectbox('From',('2010','2011','2012','2013','2014','2015'))
+    end=col2.selectbox('To',('2019','2020'))
+
+    go=st.form_submit_button("Show")
+  
+  if go:
+    if user_input=='':
+        st.warning('Please select stock ticker')
+    else:
+        df=data.DataReader(user_input, 'yahoo', start, end)
+
+        # Describing Data
+        heading1 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Data from {start}-{end}</p>"""
+        st.markdown(heading1, unsafe_allow_html=True)
+        st.write(df.describe())
+
+        # Visualisation
+        heading2 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart</p>'
+        st.markdown(heading2, unsafe_allow_html=True)
+        fig=plt.figure(figsize=(12,6))
+        plt.plot(df.Close)
+        st.pyplot(fig)
+
+        heading3 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
+        st.markdown(heading3, unsafe_allow_html=True)
+        ma100=df.Close.rolling(100).mean()
+        fig=plt.figure(figsize=(12,6))
+        plt.plot(ma100)
+        plt.plot(df.Close)
+        st.pyplot(fig)
+
+        heading4 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
+        st.markdown(heading4, unsafe_allow_html=True)
+        ma100=df.Close.rolling(100).mean()
+        ma200=df.Close.rolling(200).mean()
+        fig=plt.figure(figsize=(12,6))
+        plt.plot(ma100,'r')
+        plt.plot(ma200,'g')
+        plt.plot(df.Close,'b')
+        st.pyplot(fig)
 
 
+        # splitting data into training and testing
 
-    # Describing Data
-    heading1 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Data from 2011-2021</p>'
-    st.markdown(heading1, unsafe_allow_html=True)
-    st.write(df.describe())
+        data_training=pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
+        data_testing=pd.DataFrame(df['Close'][int(len(df)*0.70):int(len(df))])
 
-    # Visualisation
-    heading2 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart</p>'
-    st.markdown(heading2, unsafe_allow_html=True)
-    fig=plt.figure(figsize=(12,6))
-    plt.plot(df.Close)
-    st.pyplot(fig)
+        from sklearn.preprocessing import MinMaxScaler
+        scaler=MinMaxScaler(feature_range=(0,1))
 
-    heading3 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
-    st.markdown(heading3, unsafe_allow_html=True)
-    ma100=df.Close.rolling(100).mean()
-    fig=plt.figure(figsize=(12,6))
-    plt.plot(ma100)
-    plt.plot(df.Close)
-    st.pyplot(fig)
+        data_training_array=scaler.fit_transform(data_training)
 
-    heading4 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
-    st.markdown(heading4, unsafe_allow_html=True)
-    ma100=df.Close.rolling(100).mean()
-    ma200=df.Close.rolling(200).mean()
-    fig=plt.figure(figsize=(12,6))
-    plt.plot(ma100,'r')
-    plt.plot(ma200,'g')
-    plt.plot(df.Close,'b')
-    st.pyplot(fig)
+        st.spinner()
+        with st.spinner(text='Loading LSTM model...'):
+            time.sleep(4)
+        # Load my model
+        model=load_model('keras_model.h5')
+
+        # Testing Part
+        past_100_days=data_training.tail(100)
+        final_df=past_100_days.append(data_testing,ignore_index=True)
+        input_data=scaler.fit_transform(final_df)
 
 
-    # splitting data into training and testing
-
-    data_training=pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
-    data_testing=pd.DataFrame(df['Close'][int(len(df)*0.70):int(len(df))])
-
-    from sklearn.preprocessing import MinMaxScaler
-    scaler=MinMaxScaler(feature_range=(0,1))
-
-    data_training_array=scaler.fit_transform(data_training)
-
-    st.spinner()
-    with st.spinner(text='Loading LSTM model...'):
-        time.sleep(4)
-    # Load my model
-    model=load_model('keras_model.h5')
-
-    # Testing Part
-    past_100_days=data_training.tail(100)
-    final_df=past_100_days.append(data_testing,ignore_index=True)
-    input_data=scaler.fit_transform(final_df)
+        x_test=[]
+        y_test=[]
 
 
-    x_test=[]
-    y_test=[]
+        for i in range(100,input_data.shape[0]):
+            x_test.append(input_data[i-100:i])
+            y_test.append(input_data[i,0])
+
+        x_test,y_test=np.array(x_test),np.array(y_test)
+        st.spinner()
+        with st.spinner(text='Predicting Data...'):
+            time.sleep(5) 
+        y_predicted=model.predict(x_test)
+        scaler=scaler.scale_
+
+        scale_factor=1/scaler[0]
+        y_predicted=y_predicted*scale_factor
+        y_test=y_test*scale_factor
 
 
-    for i in range(100,input_data.shape[0]):
-        x_test.append(input_data[i-100:i])
-        y_test.append(input_data[i,0])
-
-    x_test,y_test=np.array(x_test),np.array(y_test)
-    st.spinner()
-    with st.spinner(text='Predicting Data...'):
-        time.sleep(5) 
-    y_predicted=model.predict(x_test)
-    scaler=scaler.scale_
-
-    scale_factor=1/scaler[0]
-    y_predicted=y_predicted*scale_factor
-    y_test=y_test*scale_factor
-
-
-    # Final Graph
-    heading5 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>'
-    st.markdown(heading5, unsafe_allow_html=True)
-    st.spinner()
-    with st.spinner(text='Loading the result...'):
-        time.sleep(5)
-    fig2=plt.figure(figsize=(12,6))
-    plt.plot(y_test,'b',label='Original Price')
-    plt.plot(y_predicted,'r',label='Predicted Price')
-    plt.xlabel('Time')
-    plt.ylabel('Price')
-    st.pyplot(fig2)
-    # st.balloons()
+        # Final Graph
+        heading5 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>'
+        st.markdown(heading5, unsafe_allow_html=True)
+        st.spinner()
+        with st.spinner(text='Loading the result...'):
+            time.sleep(5)
+        fig2=plt.figure(figsize=(12,6))
+        plt.plot(y_test,'b',label='Original Price')
+        plt.plot(y_predicted,'r',label='Predicted Price')
+        plt.xlabel('Time')
+        plt.ylabel('Price')
+        st.pyplot(fig2)
+        # st.balloons()
 
 if rad=='Contact':
     new_title = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
