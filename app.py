@@ -42,9 +42,9 @@ st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniy
 
 if rad=='Home':
     # json=pd.read_json('89023-loading-circles.json')
-    st.spinner()
-    with st.spinner(text='Loading...'):
-      time.sleep(5)
+    # st.spinner()
+    # with st.spinner(text='Loading...'):
+    #   time.sleep(5)
       new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
       st.markdown(new_title, unsafe_allow_html=True)
       heading1 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Introduction</p>'
@@ -63,9 +63,9 @@ if rad=='Home':
       st.write('iii.   The third step is to decide what will be the final output. First, you need to run a sigmoid layer which determines what parts of the cell state make it to the output. Then, you must put the cell state through the tanh function to push the values between -1 and 1 and multiply it by the output of the sigmoid gate.')
 
 if rad=='Stock Price Prediction':
-  st.spinner()
-  with st.spinner(text='Loading...'):
-      time.sleep(5)  
+#   st.spinner()
+#   with st.spinner(text='Loading...'):
+#       time.sleep(5)  
   new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
   st.markdown(new_title, unsafe_allow_html=True)
   
@@ -128,7 +128,7 @@ if rad=='Stock Price Prediction':
 
         st.spinner()
         with st.spinner(text='Loading LSTM model...'):
-            time.sleep(4)
+            time.sleep(1)
         # Load my model
         model=load_model('keras_model.h5')
 
@@ -149,7 +149,7 @@ if rad=='Stock Price Prediction':
         x_test,y_test=np.array(x_test),np.array(y_test)
         st.spinner()
         with st.spinner(text='Predicting Data...'):
-            time.sleep(5) 
+            time.sleep(2) 
         y_predicted=model.predict(x_test)
         scaler=scaler.scale_
 
@@ -163,7 +163,7 @@ if rad=='Stock Price Prediction':
         st.markdown(heading5, unsafe_allow_html=True)
         st.spinner()
         with st.spinner(text='Loading the result...'):
-            time.sleep(5)
+            time.sleep(1)
         fig2=plt.figure(figsize=(12,6))
         plt.plot(y_test,'b',label='Original Price')
         plt.plot(y_predicted,'r',label='Predicted Price')
