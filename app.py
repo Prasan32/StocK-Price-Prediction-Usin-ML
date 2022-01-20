@@ -68,10 +68,11 @@ if rad=='Stock Price Prediction':
       time.sleep(5)  
   new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
   st.markdown(new_title, unsafe_allow_html=True)
-
+  
+  dict={'APPLE':'AAPL','GOOGLE':'GOOG','TESLA':'TSLA','AMD':'AMD',"NVIDIA":'NVDA','INTEL':'INTC'}
 
   with st.form("my_form1"):
-    user_input=st.selectbox('Choose Stock Ticker',('','AAPL','TSLA','AMD','NVDA','INTC','GOOG'))
+    user_input=st.selectbox('Choose Stock Ticker',('','APPLE','TESLA','AMD','NVIDIA','INTEL','GOOGLE'))
     col1,col2=st.columns(2)
     start=col1.selectbox('From',('2010','2011','2012','2013','2014','2015'))
     end=col2.selectbox('To',('2019','2020'))
@@ -82,7 +83,7 @@ if rad=='Stock Price Prediction':
     if user_input=='':
         st.warning('Please select stock ticker')
     else:
-        df=data.DataReader(user_input, 'yahoo', start, end)
+        df=data.DataReader(dict[user_input], 'yahoo', start, end)
 
         # Describing Data
         heading1 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Data from {start}-{end}</p>"""
