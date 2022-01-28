@@ -1,3 +1,4 @@
+from cProfile import label
 from logging import PlaceHolder
 import numpy as np
 import pandas as pd
@@ -37,30 +38,33 @@ while i<14:
     st.sidebar.write("")
     i+=1
 
+# st.sidebar.write("A web app that redifine the way of investment.")
 st.sidebar.write("Visit Developer Profile:")
 st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
+st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
+st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
 
 if rad=='Home':
     # json=pd.read_json('89023-loading-circles.json')
     # st.spinner()
     # with st.spinner(text='Loading...'):
     #   time.sleep(5)
-      new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
+      new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 72px;text-align:center;">Stock Market Price Prediction</h1><br><p style="text-align:center;font-family:sans-serif; color:#8271D2; font-size: 32px;">Welcome! to the future of investing</p>'
       st.markdown(new_title, unsafe_allow_html=True)
-      heading1 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Introduction</p>'
+      heading1 = '<p style="font-family:sans-serif; color:black; font-size: 15px;margin-top:110px"><b>Disclaimer</b>:<br>We are not a financial expert. This project is for educational purposes only to demonstrate the application of TensorFlow/Keras,LSTM, Streamlit and other visualisations.Please consult a professional financial consultant for investing. Invest at your own risk.</p>'
       st.markdown(heading1, unsafe_allow_html=True)
-      st.write('Stock Price Prediction using machine learning helps you discover the future value of company stock and other financial assets traded on an exchange. The entire idea of predicting stock prices is to gain significant profits. Predicting how the stock market will perform is a hard task to do. There are other factors involved in the prediction, such as physical and psychological factors, rational and irrational behavior, and so on. All these factors combine to make share prices dynamic and volatile. This makes it very difficult to predict stock prices with high accuracy. ')
-      heading1 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">LSTM</p>'
-      st.markdown(heading1, unsafe_allow_html=True)      
-      st.write('Here, we have used a Long Short Term Memory Network (LSTM) for building our model to predict the stock prices of companies.')
-      st.write('LTSMs are a type of Recurrent Neural Network for learning long-term dependencies. It is commonly used for processing and predicting time-series data. ')
-      image=Image.open('LSTM architecture.PNG')
-      st.image(image, caption='LSTM architecture')
-      st.write('From the image on the top, you can see LSTMs have a chain-like structure. General RNNs have a single neural network layer. LSTMs, on the other hand, have four interacting layers communicating extraordinarily.')
-      st.write('LSTMs work in a three-step process.')
-      st.write('i.     The first step in LSTM is to decide which information to be omitted from the cell in that particular time step. It is decided with the help of a sigmoid function. It looks at the previous state (ht-1) and the current input xt and computes the function.')
-      st.write('ii.    There are two functions in the second layer. The first is the sigmoid function, and the second is the tanh function. The sigmoid function decides which values to let through (0 or 1). The tanh function gives the weightage to the values passed, deciding their level of importance from -1 to 1.')
-      st.write('iii.   The third step is to decide what will be the final output. First, you need to run a sigmoid layer which determines what parts of the cell state make it to the output. Then, you must put the cell state through the tanh function to push the values between -1 and 1 and multiply it by the output of the sigmoid gate.')
+    #   st.write('Stock Price Prediction using machine learning helps you discover the future value of company stock and other financial assets traded on an exchange. The entire idea of predicting stock prices is to gain significant profits. Predicting how the stock market will perform is a hard task to do. There are other factors involved in the prediction, such as physical and psychological factors, rational and irrational behavior, and so on. All these factors combine to make share prices dynamic and volatile. This makes it very difficult to predict stock prices with high accuracy. ')
+    #   heading1 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">LSTM</p>'
+    #   st.markdown(heading1, unsafe_allow_html=True)      
+    #   st.write('Here, we have used a Long Short Term Memory Network (LSTM) for building our model to predict the stock prices of companies.')
+    #   st.write('LTSMs are a type of Recurrent Neural Network for learning long-term dependencies. It is commonly used for processing and predicting time-series data. ')
+    #   image=Image.open('LSTM architecture.PNG')
+    #   st.image(image, caption='LSTM architecture')
+    #   st.write('From the image on the top, you can see LSTMs have a chain-like structure. General RNNs have a single neural network layer. LSTMs, on the other hand, have four interacting layers communicating extraordinarily.')
+    #   st.write('LSTMs work in a three-step process.')
+    #   st.write('i.     The first step in LSTM is to decide which information to be omitted from the cell in that particular time step. It is decided with the help of a sigmoid function. It looks at the previous state (ht-1) and the current input xt and computes the function.')
+    #   st.write('ii.    There are two functions in the second layer. The first is the sigmoid function, and the second is the tanh function. The sigmoid function decides which values to let through (0 or 1). The tanh function gives the weightage to the values passed, deciding their level of importance from -1 to 1.')
+    #   st.write('iii.   The third step is to decide what will be the final output. First, you need to run a sigmoid layer which determines what parts of the cell state make it to the output. Then, you must put the cell state through the tanh function to push the values between -1 and 1 and multiply it by the output of the sigmoid gate.')
 
 if rad=='Stock Price Prediction':
 #   st.spinner()
@@ -69,13 +73,13 @@ if rad=='Stock Price Prediction':
   new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
   st.markdown(new_title, unsafe_allow_html=True)
   
-  dict={'APPLE':'AAPL','GOOGLE':'GOOG','TESLA':'TSLA','AMD':'AMD',"NVIDIA":'NVDA','INTEL':'INTC'}
+  dict={'APPLE':'AAPL','GOOGLE':'GOOG','TESLA':'TSLA','AMD':'AMD',"NVIDIA":'NVDA','INTEL':'INTC','FACEBOOK':'FB2A.BE'}
 
   with st.form("my_form1"):
-    user_input=st.selectbox('Choose Stock Ticker',('','APPLE','TESLA','AMD','NVIDIA','INTEL','GOOGLE'))
+    user_input=st.selectbox('Choose Stock Ticker',('','APPLE','TESLA','AMD','NVIDIA','INTEL','GOOGLE','FACEBOOK'))
     col1,col2=st.columns(2)
     start=col1.selectbox('From',('2010','2011','2012','2013','2014','2015'))
-    end=col2.selectbox('To',('2019','2020'))
+    end=col2.selectbox('To',('2018','2019','2020'))
 
     go=st.form_submit_button("Show")
   
@@ -94,15 +98,17 @@ if rad=='Stock Price Prediction':
         heading2 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart</p>'
         st.markdown(heading2, unsafe_allow_html=True)
         fig=plt.figure(figsize=(12,6))
-        plt.plot(df.Close)
+        plt.plot(df.Close,'b',label='Closing Price')
+        plt.legend()
         st.pyplot(fig)
 
         heading3 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
         st.markdown(heading3, unsafe_allow_html=True)
         ma100=df.Close.rolling(100).mean()
         fig=plt.figure(figsize=(12,6))
-        plt.plot(ma100)
-        plt.plot(df.Close)
+        plt.plot(ma100,'r',label='100 days MA')
+        plt.plot(df.Close,'b',label='Closing Price')
+        plt.legend()
         st.pyplot(fig)
 
         heading4 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
@@ -110,9 +116,12 @@ if rad=='Stock Price Prediction':
         ma100=df.Close.rolling(100).mean()
         ma200=df.Close.rolling(200).mean()
         fig=plt.figure(figsize=(12,6))
-        plt.plot(ma100,'r')
-        plt.plot(ma200,'g')
-        plt.plot(df.Close,'b')
+        plt.plot(ma100,'r',label='100 days MA')
+        plt.plot(ma200,'g',label='200 days MA')
+        plt.plot(df.Close,'b',label='Closing Price')
+        plt.xlabel('Time (Years)')
+        plt.ylabel('Price')
+        plt.legend()
         st.pyplot(fig)
 
 
@@ -159,7 +168,7 @@ if rad=='Stock Price Prediction':
 
 
         # Final Graph
-        heading5 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>'
+        heading5 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>"""
         st.markdown(heading5, unsafe_allow_html=True)
         st.spinner()
         with st.spinner(text='Loading the result...'):
@@ -169,6 +178,7 @@ if rad=='Stock Price Prediction':
         plt.plot(y_predicted,'r',label='Predicted Price')
         plt.xlabel('Time')
         plt.ylabel('Price')
+        plt.legend()
         st.pyplot(fig2)
         # st.balloons()
 
@@ -202,4 +212,3 @@ if rad=='Contact':
 
 
          
-
