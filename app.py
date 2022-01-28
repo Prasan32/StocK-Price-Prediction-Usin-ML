@@ -79,7 +79,7 @@ if rad=='Stock Price Prediction':
     user_input=st.selectbox('Choose Stock Ticker',('','APPLE','TESLA','AMD','NVIDIA','INTEL','GOOGLE','FACEBOOK'))
     col1,col2=st.columns(2)
     start=col1.selectbox('From',('2010','2011','2012','2013','2014','2015'))
-    end=col2.selectbox('To',('2018','2019','2020'))
+    end=col2.selectbox('To',('2016','2017','2018','2019','2020'))
 
     go=st.form_submit_button("Show")
   
