@@ -1,6 +1,5 @@
 from cProfile import label
 from logging import PlaceHolder
-from cv2 import sqrt
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
