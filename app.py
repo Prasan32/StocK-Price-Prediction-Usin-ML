@@ -1,5 +1,6 @@
 from cProfile import label
 from logging import PlaceHolder
+from cv2 import sqrt
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -33,39 +34,21 @@ st.markdown(f""" <style>
 
 rad=st.sidebar.selectbox('Navigation',('Home','Stock Price Prediction','Contact',))
 
-i=1
-while i<14:
-    st.sidebar.write("")
-    i+=1
-
-# st.sidebar.write("A web app that redifine the way of investment.")
-st.sidebar.write("Visit Developer Profile:")
-st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
-st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
-st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
 
 if rad=='Home':
-    # json=pd.read_json('89023-loading-circles.json')
-    # st.spinner()
-    # with st.spinner(text='Loading...'):
-    #   time.sleep(5)
+      i=1
+      while i<14:
+          st.sidebar.write("")
+          i+=1
+      st.sidebar.write("Visit Developer Profile:")
+      st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
+      st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
+      st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
       new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 72px;text-align:center;">Stock Market Price Prediction</h1><br><p style="text-align:center;font-family:sans-serif; color:#8271D2; font-size: 32px;">Welcome! to the future of investing</p>'
       st.markdown(new_title, unsafe_allow_html=True)
       heading1 = '<p style="font-family:sans-serif; color:black; font-size: 15px;margin-top:110px"><b>Disclaimer</b>:<br>We are not a financial expert. This project is for educational purposes only to demonstrate the application of TensorFlow/Keras,LSTM, Streamlit and other visualisations.Please consult a professional financial consultant for investing. Invest at your own risk.</p>'
       st.markdown(heading1, unsafe_allow_html=True)
-    #   st.write('Stock Price Prediction using machine learning helps you discover the future value of company stock and other financial assets traded on an exchange. The entire idea of predicting stock prices is to gain significant profits. Predicting how the stock market will perform is a hard task to do. There are other factors involved in the prediction, such as physical and psychological factors, rational and irrational behavior, and so on. All these factors combine to make share prices dynamic and volatile. This makes it very difficult to predict stock prices with high accuracy. ')
-    #   heading1 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">LSTM</p>'
-    #   st.markdown(heading1, unsafe_allow_html=True)      
-    #   st.write('Here, we have used a Long Short Term Memory Network (LSTM) for building our model to predict the stock prices of companies.')
-    #   st.write('LTSMs are a type of Recurrent Neural Network for learning long-term dependencies. It is commonly used for processing and predicting time-series data. ')
-    #   image=Image.open('LSTM architecture.PNG')
-    #   st.image(image, caption='LSTM architecture')
-    #   st.write('From the image on the top, you can see LSTMs have a chain-like structure. General RNNs have a single neural network layer. LSTMs, on the other hand, have four interacting layers communicating extraordinarily.')
-    #   st.write('LSTMs work in a three-step process.')
-    #   st.write('i.     The first step in LSTM is to decide which information to be omitted from the cell in that particular time step. It is decided with the help of a sigmoid function. It looks at the previous state (ht-1) and the current input xt and computes the function.')
-    #   st.write('ii.    There are two functions in the second layer. The first is the sigmoid function, and the second is the tanh function. The sigmoid function decides which values to let through (0 or 1). The tanh function gives the weightage to the values passed, deciding their level of importance from -1 to 1.')
-    #   st.write('iii.   The third step is to decide what will be the final output. First, you need to run a sigmoid layer which determines what parts of the cell state make it to the output. Then, you must put the cell state through the tanh function to push the values between -1 and 1 and multiply it by the output of the sigmoid gate.')
-
+   
 if rad=='Stock Price Prediction':
 #   st.spinner()
 #   with st.spinner(text='Loading...'):
@@ -162,9 +145,30 @@ if rad=='Stock Price Prediction':
         y_predicted=model.predict(x_test)
         scaler=scaler.scale_
 
+        mse=np.square(np.subtract(y_test,y_predicted)).mean()
+        rmse=np.sqrt(mse)
+        # rmse=np.sqrt(np.mean(((y_predicted-y_test)**2)))
+
+        mape=np.mean(np.abs((y_test-y_predicted)/y_test))*100
+
         scale_factor=1/scaler[0]
         y_predicted=y_predicted*scale_factor
         y_test=y_test*scale_factor
+
+         
+
+        i=1
+        while i<5:
+            st.sidebar.write("")
+            i+=1
+        st.sidebar.write("Mean Squared Error:") 
+        st.sidebar.write(mse)
+
+        st.sidebar.write("Root Mean Squared Error:")
+        st.sidebar.write(rmse)
+
+        # st.sidebar.write("Mean Absolute Percentage Error:")
+        # st.sidebar.write(mape)
 
 
         # Final Graph
@@ -182,7 +186,17 @@ if rad=='Stock Price Prediction':
         st.pyplot(fig2)
         # st.balloons()
 
+
+
 if rad=='Contact':
+    i=1
+    while i<14:
+        st.sidebar.write("")
+        i+=1
+    st.sidebar.write("Visit Developer Profile:")
+    st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
+    st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
+    st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
     new_title = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
     st.markdown(new_title, unsafe_allow_html=True)
     with st.form("my_form",clear_on_submit=True):
