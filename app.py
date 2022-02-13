@@ -49,15 +49,13 @@ if rad=='Home':
       st.markdown(heading1, unsafe_allow_html=True)
    
 if rad=='Stock Price Prediction':
-#   st.spinner()
-#   with st.spinner(text='Loading...'):
-#       time.sleep(5)  
   new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
   st.markdown(new_title, unsafe_allow_html=True)
   
   dict={'APPLE':'AAPL','GOOGLE':'GOOG','TESLA':'TSLA','AMD':'AMD',"NVIDIA":'NVDA','INTEL':'INTC','FACEBOOK':'FB2A.BE'}
 
   with st.form("my_form1"):
+    uploaded_file = st.file_uploader("Upload a csv file")
     user_input=st.selectbox('Choose Stock Ticker',('','APPLE','TESLA','AMD','NVIDIA','INTEL','GOOGLE','FACEBOOK'))
     col1,col2=st.columns(2)
     start=col1.selectbox('From',('2010','2011','2012','2013','2014','2015'))
@@ -66,9 +64,7 @@ if rad=='Stock Price Prediction':
     go=st.form_submit_button("Show")
   
   if go:
-    if user_input=='':
-        st.warning('Please select stock ticker')
-    else:
+    if user_input:
         df=data.DataReader(dict[user_input], 'yahoo', start, end)
 
         # Describing Data
@@ -101,7 +97,7 @@ if rad=='Stock Price Prediction':
         plt.plot(ma100,'r',label='100 days MA')
         plt.plot(ma200,'g',label='200 days MA')
         plt.plot(df.Close,'b',label='Closing Price')
-        plt.xlabel('Time (Years)')
+        plt.xlabel('Time ')
         plt.ylabel('Price')
         plt.legend()
         st.pyplot(fig)
@@ -154,12 +150,14 @@ if rad=='Stock Price Prediction':
         y_predicted=y_predicted*scale_factor
         y_test=y_test*scale_factor
 
-         
+            
 
         i=1
         while i<5:
             st.sidebar.write("")
             i+=1
+        st.sidebar.markdown(f"""<h4>Stock Name: <span style="color:green">{user_input}</span></h4>""",unsafe_allow_html=True)
+        st.sidebar.markdown(f"""<h4>Stock Symbol: <span style="color:green">{dict[user_input]}</span></h4>""",unsafe_allow_html=True)
         st.sidebar.write("Mean Squared Error:") 
         st.sidebar.write(mse)
 
@@ -184,6 +182,125 @@ if rad=='Stock Price Prediction':
         plt.legend()
         st.pyplot(fig2)
         # st.balloons()
+    elif uploaded_file:
+        df=pd.read_csv(uploaded_file)
+        # Describing Data
+        heading1 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Data from {start}-{end}</p>"""
+        st.markdown(heading1, unsafe_allow_html=True)
+        st.write(df.describe())
+
+        # Visualisation
+        heading2 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart</p>'
+        st.markdown(heading2, unsafe_allow_html=True)
+        fig=plt.figure(figsize=(12,6))
+        plt.plot(df.Close,'b',label='Closing Price')
+        plt.legend()
+        st.pyplot(fig)
+
+        heading3 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
+        st.markdown(heading3, unsafe_allow_html=True)
+        ma100=df.Close.rolling(100).mean()
+        fig=plt.figure(figsize=(12,6))
+        plt.plot(ma100,'r',label='100 days MA')
+        plt.plot(df.Close,'b',label='Closing Price')
+        plt.legend()
+        st.pyplot(fig)
+
+        heading4 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
+        st.markdown(heading4, unsafe_allow_html=True)
+        ma100=df.Close.rolling(100).mean()
+        ma200=df.Close.rolling(200).mean()
+        fig=plt.figure(figsize=(12,6))
+        plt.plot(ma100,'r',label='100 days MA')
+        plt.plot(ma200,'g',label='200 days MA')
+        plt.plot(df.Close,'b',label='Closing Price')
+        plt.xlabel('Time')
+        plt.ylabel('Price')
+        plt.legend()
+        st.pyplot(fig)
+
+
+        # splitting data into training and testing
+
+        data_training=pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
+        data_testing=pd.DataFrame(df['Close'][int(len(df)*0.70):int(len(df))])
+
+        from sklearn.preprocessing import MinMaxScaler
+        scaler=MinMaxScaler(feature_range=(0,1))
+
+        data_training_array=scaler.fit_transform(data_training)
+
+        st.spinner()
+        with st.spinner(text='Loading LSTM model...'):
+            time.sleep(1)
+        # Load my model
+        model=load_model('keras_model.h5')
+
+        # Testing Part
+        past_100_days=data_training.tail(100)
+        final_df=past_100_days.append(data_testing,ignore_index=True)
+        input_data=scaler.fit_transform(final_df)
+
+
+        x_test=[]
+        y_test=[]
+
+
+        for i in range(100,input_data.shape[0]):
+            x_test.append(input_data[i-100:i])
+            y_test.append(input_data[i,0])
+
+        x_test,y_test=np.array(x_test),np.array(y_test)
+        st.spinner()
+        with st.spinner(text='Predicting Data...'):
+            time.sleep(2) 
+        y_predicted=model.predict(x_test)
+        scaler=scaler.scale_
+
+        mse=np.square(np.subtract(y_test,y_predicted)).mean()
+        rmse=np.sqrt(mse)
+        # rmse=np.sqrt(np.mean(((y_predicted-y_test)**2)))
+
+        mape=np.mean(np.abs((y_test-y_predicted)/y_test))*100
+
+        scale_factor=1/scaler[0]
+        y_predicted=y_predicted*scale_factor
+        y_test=y_test*scale_factor
+
+            
+
+        i=1
+        while i<5:
+            st.sidebar.write("")
+            i+=1
+        st.sidebar.markdown(f"""<h4>Stock Symbol: <span style="color:green">{df.Symbol[0]}</span></h4>""",unsafe_allow_html=True)
+        st.sidebar.write("Mean Squared Error:") 
+        st.sidebar.write(mse)
+
+        st.sidebar.write("Root Mean Squared Error:")
+        st.sidebar.write(rmse)
+
+        # st.sidebar.write("Mean Absolute Percentage Error:")
+        # st.sidebar.write(mape)
+
+
+        # Final Graph
+        heading5 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>"""
+        st.markdown(heading5, unsafe_allow_html=True)
+        st.spinner()
+        with st.spinner(text='Loading the result...'):
+            time.sleep(1)
+        fig2=plt.figure(figsize=(12,6))
+        plt.plot(y_test,'b',label='Original Price')
+        plt.plot(y_predicted,'r',label='Predicted Price')
+        plt.xlabel('Time')
+        plt.ylabel('Price')
+        plt.legend()
+        st.pyplot(fig2)
+        # st.balloons()
+    else:
+        st.info('Please select a stock ticker or upload a csv file')
+
 
 
 
@@ -202,16 +319,19 @@ if rad=='Contact':
        name=st.text_input(label='Name:',max_chars=50,placeholder='Enter your name')    
        email=st.text_input(label='Email:',placeholder='Enter your email address')
        message=st.text_area(label='Message:',height=100)
-       rating = st.slider("Rate us (1 to 5)",0,5,value=3)
+    #    rating = st.slider("Rate us (1 to 5)",0,5,value=3)
     #    checkbox_val = st.checkbox("Form checkbox")
 
     # Every form must have a submit button.
        submitted = st.form_submit_button("Submit")
     if submitted:
+        # d = {"Name":name, 
+        #     "Email":email,
+        #     "Message":message,
+        #     "Rating":rating,}
         d = {"Name":name, 
             "Email":email,
-            "Message":message,
-            "Rating":rating,}
+            "Message":message}
 
         if name=="" and email=="" and message=="":
             # st.markdown('<h5>Please fill all the fields<h5>',unsafe_allow_html=True)
