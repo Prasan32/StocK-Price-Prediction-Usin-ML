@@ -156,7 +156,7 @@ if rad=='Stock Price Prediction':
             
 
         i=1
-        while i<5:
+        while i<2:
             st.sidebar.write("")
             i+=1
         st.sidebar.markdown(f"""<h4>Stock Name: <span style="color:green">{user_input}</span></h4>""",unsafe_allow_html=True)
