@@ -147,6 +147,8 @@ if rad=='Stock Price Prediction':
 
         mape=np.mean(np.abs((y_test-y_predicted)/y_test))*100
 
+        accuracy=100-(rmse*100)
+
         scale_factor=1/scaler[0]
         y_predicted=y_predicted*scale_factor
         y_test=y_test*scale_factor
@@ -164,6 +166,9 @@ if rad=='Stock Price Prediction':
 
         st.sidebar.write("Root Mean Squared Error:")
         st.sidebar.write(rmse)
+
+        st.sidebar.write("Accuracy:")
+        st.sidebar.write(accuracy)
 
         # st.sidebar.write("Mean Absolute Percentage Error:")
         # st.sidebar.write(mape)
@@ -262,6 +267,8 @@ if rad=='Stock Price Prediction':
         rmse=np.sqrt(mse)
         # rmse=np.sqrt(np.mean(((y_predicted-y_test)**2)))
 
+        accuracy=100-(rmse*100)
+
         mape=np.mean(np.abs((y_test-y_predicted)/y_test))*100
 
         scale_factor=1/scaler[0]
@@ -281,6 +288,9 @@ if rad=='Stock Price Prediction':
         st.sidebar.write("Root Mean Squared Error:")
         st.sidebar.write(rmse)
 
+
+        st.sidebar.write("Accuracy:")
+        st.sidebar.write(accuracy)
         # st.sidebar.write("Mean Absolute Percentage Error:")
         # st.sidebar.write(mape)
 
