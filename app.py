@@ -56,6 +56,7 @@ if rad=='Stock Price Prediction':
 
   with st.form("my_form1"):
     uploaded_file = st.file_uploader("Upload a csv file")
+    st.write('OR')
     user_input=st.selectbox('Choose Stock Ticker',('','APPLE','TESLA','AMD','NVIDIA','INTEL','GOOGLE','FACEBOOK'))
     col1,col2=st.columns(2)
     start=col1.selectbox('From',('2010','2011','2012','2013','2014','2015'))
