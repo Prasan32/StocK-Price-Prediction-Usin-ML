@@ -156,7 +156,7 @@ if rad=='Stock Price Prediction':
             
 
         i=1
-        while i<2:
+        while i<5:
             st.sidebar.write("")
             i+=1
         st.sidebar.markdown(f"""<h4>Stock Name: <span style="color:green">{user_input}</span></h4>""",unsafe_allow_html=True)
@@ -167,8 +167,8 @@ if rad=='Stock Price Prediction':
         st.sidebar.write("Root Mean Squared Error:")
         st.sidebar.write(rmse)
 
-        st.sidebar.write("Accuracy:")
-        st.sidebar.write(accuracy)
+        # st.sidebar.write("Accuracy:")
+        # st.sidebar.write(accuracy)
 
         # st.sidebar.write("Mean Absolute Percentage Error:")
         # st.sidebar.write(mape)
@@ -289,8 +289,8 @@ if rad=='Stock Price Prediction':
         st.sidebar.write(rmse)
 
 
-        st.sidebar.write("Accuracy:")
-        st.sidebar.write(accuracy)
+        # st.sidebar.write("Accuracy:")
+        # st.sidebar.write(accuracy)
         # st.sidebar.write("Mean Absolute Percentage Error:")
         # st.sidebar.write(mape)
 
