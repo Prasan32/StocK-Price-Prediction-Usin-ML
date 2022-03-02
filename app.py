@@ -35,14 +35,14 @@ rad=st.sidebar.selectbox('Navigation',('Home','Stock Price Prediction','Contact'
 
 
 if rad=='Home':
-      i=1
-      while i<14:
-          st.sidebar.write("")
-          i+=1
-      st.sidebar.write("Visit Developer Profile:")
-      st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
-      st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
-      st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
+    #   i=1
+    #   while i<14:
+    #       st.sidebar.write("")
+    #       i+=1
+    #   st.sidebar.write("Visit Developer Profile:")
+    #   st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
+    #   st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
+    #   st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
       new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 72px;text-align:center;">Stock Market Price Prediction</h1><br><p style="text-align:center;font-family:sans-serif; color:#8271D2; font-size: 32px;">Welcome! to the future of investing</p>'
       st.markdown(new_title, unsafe_allow_html=True)
       heading1 = '<p style="font-family:sans-serif; color:black; font-size: 15px;margin-top:110px"><b>Disclaimer</b>:<br>We are not a financial expert. This project is for educational purposes only to demonstrate the application of TensorFlow/Keras,LSTM, Streamlit and other visualisations.Please consult a professional financial consultant for investing. Invest at your own risk.</p>'
@@ -321,7 +321,7 @@ if rad=='Contact':
         st.sidebar.write("")
         i+=1
     st.sidebar.write("Visit Developer Profile:")
-    st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
+    st.sidebar.write("[Prasanna Kumar Baniya](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
     st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
     st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
     new_title = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
