@@ -1,5 +1,6 @@
 from cProfile import label
 from logging import PlaceHolder
+from pickle import TRUE
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -328,32 +329,24 @@ if rad=='Contact':
     st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
     new_title = '<p style="font-family:serif; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
     st.markdown(new_title, unsafe_allow_html=True)
-    with st.form("my_form",clear_on_submit=True):
-       name=st.text_input(label='Name:',max_chars=50,placeholder='Enter your name')    
-       email=st.text_input(label='Email:',placeholder='Enter your email address')
-       message=st.text_area(label='Message:',height=100)
-    #    rating = st.slider("Rate us (1 to 5)",0,5,value=3)
-    #    checkbox_val = st.checkbox("Form checkbox")
 
-    # Every form must have a submit button.
-       submitted = st.form_submit_button("Submit")
-    if submitted:
-        # d = {"Name":name, 
-        #     "Email":email,
-        #     "Message":message,
-        #     "Rating":rating,}
-        d = {"Name":name, 
-            "Email":email,
-            "Message":message}
+    contact_form="""<form action="https://formsubmit.co/2888f76eee7859f90c1dfe9706938706" method="POST">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_autoresponse" value="Thank You! FOR SHARING YOUR FEEDBACK">
+                        <input type="text" placeholder="Your name" name="name" required>
+                        <input type="email" placeholder="Your email"  name="email" required>
+                        <textarea name="message"  placeholder="message" ></textarea>
+                        <button type="submit">Send</button>
+                    </form>
+                  """
+    st.markdown(contact_form,unsafe_allow_html=True)
 
-        if name=="" and email=="" and message=="":
-            # st.markdown('<h5>Please fill all the fields<h5>',unsafe_allow_html=True)
-            st.error('Please fill all the fields')
-        else:
-           st.markdown('<h3 style="font-family:sans-serif; color:#8271D2;">Thank you for your feedback!</h3>', unsafe_allow_html=True)  
-           df=pd.read_json('response.json')
-           df = df.append(d, ignore_index = True)
-           open('response.json', 'w').write(df.to_json())
+    def local_css(file_name):
+        with open(file_name) as f:
+            st.markdown(f"<style>{f.read()}<style/>",unsafe_allow_html=True)
+    
+    local_css("style/style.css")
 
 
 
