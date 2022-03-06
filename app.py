@@ -11,15 +11,19 @@ from PIL import Image
 from streamlit.elements import form
 from streamlit.legacy_caching.caching import cache
 
-st.set_page_config(page_title='Stock Price Prediction', page_icon="🤑")
+st.set_page_config(page_title='Stock Price Prediction', page_icon="🤑",initial_sidebar_state="collapsed",menu_items={
+ 'Get Help': 'https://www.extremelycoolapp.com/help',
+ 'Report a bug': "https://www.extremelycoolapp.com/bug",
+ 'About': "# This is a header. This is an *extremely* cool app!"
+ })
 
 start= '2011-01-01'
 end='2021-12-20'
 
-st.markdown(""" <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style> """, unsafe_allow_html=True)
+# st.markdown(""" <style>
+# #MainMenu {visibility: hidden;}
+# footer {visibility: hidden;}
+# </style> """, unsafe_allow_html=True)
 
 padding = 0
 st.markdown(f""" <style>
@@ -36,20 +40,18 @@ rad=st.sidebar.selectbox('Navigation',('Home','Stock Price Prediction','Contact'
 
 if rad=='Home':
     #   i=1
-    #   while i<14:
+    #   while i<2:
     #       st.sidebar.write("")
     #       i+=1
-    #   st.sidebar.write("Visit Developer Profile:")
-    #   st.sidebar.write("[Prasanna KB](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
-    #   st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
-    #   st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
-      new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 72px;text-align:center;">Stock Market Price Prediction</h1><br><p style="text-align:center;font-family:sans-serif; color:#8271D2; font-size: 32px;">Welcome! to the future of investing</p>'
+    #   image = Image.open('stock.jpg')
+    #   st.sidebar.image(image, caption='')
+      new_title = '<h1 style="font-family:serif;  font-size: 72px;text-align:center;">Stock Market Price Prediction</h1><br><p style="text-align:center;font-family:serif;font-size: 32px;">Welcome! to the future of investing</p>'
       st.markdown(new_title, unsafe_allow_html=True)
-      heading1 = '<p style="font-family:sans-serif; color:black; font-size: 15px;margin-top:110px"><b>Disclaimer</b>:<br>We are not a financial expert. This project is for educational purposes only to demonstrate the application of TensorFlow/Keras,LSTM, Streamlit and other visualisations.Please consult a professional financial consultant for investing. Invest at your own risk.</p>'
+      heading1 = '<p style="font-family:sans-serif; color:black; font-size: 15px;margin-top:110px"><b style="font-weight:bold">Disclaimer</b>:<br>We are not a financial expert. This project is for educational purposes only to demonstrate the application of TensorFlow/Keras,LSTM, Streamlit and other visualisations.Please consult a professional financial consultant for investing. Invest at your own risk.</p>'
       st.markdown(heading1, unsafe_allow_html=True)
    
 if rad=='Stock Price Prediction':
-  new_title = '<h1 style="font-family:sans-serif; color:#8271D2; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
+  new_title = '<h1 style="font-family:serif; font-size: 42px;">Stock Price Prediction Using Machine Learning</h1>'
   st.markdown(new_title, unsafe_allow_html=True)
   
   dict={'APPLE':'AAPL','GOOGLE':'GOOG','TESLA':'TSLA','AMD':'AMD',"NVIDIA":'NVDA','INTEL':'INTC','FACEBOOK':'FB2A.BE'}
@@ -69,19 +71,19 @@ if rad=='Stock Price Prediction':
         df=data.DataReader(dict[user_input], 'yahoo', start, end)
 
         # Describing Data
-        heading1 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Data from {start}-{end}</p>"""
+        heading1 = f"""<p style="font-family:serif; font-size: 30px;">Data from {start}-{end}</p>"""
         st.markdown(heading1, unsafe_allow_html=True)
         st.write(df.describe())
 
         # Visualisation
-        heading2 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart</p>'
+        heading2 = '<p style="font-family:serif; font-size: 30px;">Closing Price VS Time Chart</p>'
         st.markdown(heading2, unsafe_allow_html=True)
         fig=plt.figure(figsize=(12,6))
         plt.plot(df.Close,'b',label='Closing Price')
         plt.legend()
         st.pyplot(fig)
 
-        heading3 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
+        heading3 = '<p style="font-family:serif; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
         st.markdown(heading3, unsafe_allow_html=True)
         ma100=df.Close.rolling(100).mean()
         fig=plt.figure(figsize=(12,6))
@@ -90,7 +92,7 @@ if rad=='Stock Price Prediction':
         plt.legend()
         st.pyplot(fig)
 
-        heading4 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
+        heading4 = '<p style="font-family:serif; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
         st.markdown(heading4, unsafe_allow_html=True)
         ma100=df.Close.rolling(100).mean()
         ma200=df.Close.rolling(200).mean()
@@ -175,7 +177,7 @@ if rad=='Stock Price Prediction':
 
 
         # Final Graph
-        heading5 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>"""
+        heading5 = f"""<p style="font-family:serif; font-size: 30px;">Predictions VS Original</p>"""
         st.markdown(heading5, unsafe_allow_html=True)
         st.spinner()
         with st.spinner(text='Loading the result...'):
@@ -191,19 +193,19 @@ if rad=='Stock Price Prediction':
     elif uploaded_file:
         df=pd.read_csv(uploaded_file)
         # Describing Data
-        heading1 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Data from {start}-{end}</p>"""
+        heading1 = f"""<p style="font-family:serif; font-size: 30px;">Data from {start}-{end}</p>"""
         st.markdown(heading1, unsafe_allow_html=True)
         st.write(df.describe())
 
         # Visualisation
-        heading2 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart</p>'
+        heading2 = '<p style="font-family:serif;  font-size: 30px;">Closing Price VS Time Chart</p>'
         st.markdown(heading2, unsafe_allow_html=True)
         fig=plt.figure(figsize=(12,6))
         plt.plot(df.Close,'b',label='Closing Price')
         plt.legend()
         st.pyplot(fig)
 
-        heading3 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
+        heading3 = '<p style="font-family:serif;font-size: 30px;">Closing Price VS Time Chart with 100MA</p>'
         st.markdown(heading3, unsafe_allow_html=True)
         ma100=df.Close.rolling(100).mean()
         fig=plt.figure(figsize=(12,6))
@@ -212,7 +214,7 @@ if rad=='Stock Price Prediction':
         plt.legend()
         st.pyplot(fig)
 
-        heading4 = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
+        heading4 = '<p style="font-family:serif; font-size: 30px;">Closing Price VS Time Chart with 100MA & 200MA</p>'
         st.markdown(heading4, unsafe_allow_html=True)
         ma100=df.Close.rolling(100).mean()
         ma200=df.Close.rolling(200).mean()
@@ -296,7 +298,7 @@ if rad=='Stock Price Prediction':
 
 
         # Final Graph
-        heading5 = f"""<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;">Predictions VS Original</p>"""
+        heading5 = f"""<p style="font-family:serif; font-size: 30px;">Predictions VS Original</p>"""
         st.markdown(heading5, unsafe_allow_html=True)
         st.spinner()
         with st.spinner(text='Loading the result...'):
@@ -324,7 +326,7 @@ if rad=='Contact':
     st.sidebar.write("[Prasanna Kumar Baniya](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
     st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
     st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
-    new_title = '<p style="font-family:sans-serif; color:#8271D2; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
+    new_title = '<p style="font-family:serif; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
     st.markdown(new_title, unsafe_allow_html=True)
     with st.form("my_form",clear_on_submit=True):
        name=st.text_input(label='Name:',max_chars=50,placeholder='Enter your name')    
