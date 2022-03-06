@@ -14,7 +14,7 @@ from streamlit.legacy_caching.caching import cache
 st.set_page_config(page_title='Stock Price Prediction', page_icon="🤑",initial_sidebar_state="collapsed",menu_items={
  'Get Help': 'https://www.extremelycoolapp.com/help',
  'Report a bug': "https://www.extremelycoolapp.com/bug",
- 'About': "# This is a header. This is an *extremely* cool app!"
+ 'About': "This is an Stock Price Prediction Application for future investment. This application is made for educational purpose only."
  })
 
 start= '2011-01-01'
