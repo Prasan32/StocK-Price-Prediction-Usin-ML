@@ -337,7 +337,7 @@ if rad=='Contact':
                         <input type="text" placeholder="Your name" name="name" required>
                         <input type="email" placeholder="Your email"  name="email" required>
                         <textarea name="message"  placeholder="message" ></textarea>
-                        <button type="submit">Send</button>
+                        <button class="button-24" type="submit">Send</button>
                     </form>
                   """
     st.markdown(contact_form,unsafe_allow_html=True)
