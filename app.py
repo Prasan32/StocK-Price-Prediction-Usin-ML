@@ -331,7 +331,7 @@ if rad=='Contact':
     st.sidebar.write("[Prasanna Kumar Baniya](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
     st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
     st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
-    new_title = '<p style="font-family:serif; font-size: 30px;margin-top:30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
+    new_title = '<p style="font-family:serif; font-size: 42px;margin-top:20px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
     st.markdown(new_title, unsafe_allow_html=True)
 
     contact_form="""<form action="https://formsubmit.co/2888f76eee7859f90c1dfe9706938706" method="POST">
