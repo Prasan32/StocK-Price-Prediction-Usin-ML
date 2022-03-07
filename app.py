@@ -26,6 +26,10 @@ end='2021-12-20'
 # footer {visibility: hidden;}
 # </style> """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>footer{visibility:hidden;}</style>
+""",unsafe_allow_html=True)
+
 padding = 0
 st.markdown(f""" <style>
     .reportview-container .main .block-container{{
@@ -327,7 +331,7 @@ if rad=='Contact':
     st.sidebar.write("[Prasanna Kumar Baniya](https://www.linkedin.com/in/prasanna-kumar-baniya-9a91a5179/)")
     st.sidebar.write("[Sudhan Neupane](https://www.facebook.com/madhu.neupane.10)")
     st.sidebar.write("[Vikash Palli](https://www.facebook.com/vikashpalli.mgr)")
-    new_title = '<p style="font-family:serif; font-size: 30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
+    new_title = '<p style="font-family:serif; font-size: 30px;margin-top:30px;"><b>We would love to hear from you!</b><br>Send us a message!</p>'
     st.markdown(new_title, unsafe_allow_html=True)
 
     contact_form="""<form action="https://formsubmit.co/2888f76eee7859f90c1dfe9706938706" method="POST">
@@ -336,7 +340,7 @@ if rad=='Contact':
                         <input type="hidden" name="_autoresponse" value="Thank You! FOR SHARING YOUR FEEDBACK">
                         <input type="text" placeholder="Your name" name="name" required>
                         <input type="email" placeholder="Your email"  name="email" required>
-                        <textarea name="message"  placeholder="message" ></textarea>
+                        <textarea name="message"  placeholder="Message" ></textarea>
                         <button class="button-24" type="submit">Send</button>
                     </form>
                   """

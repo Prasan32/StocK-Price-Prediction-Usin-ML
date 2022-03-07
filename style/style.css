@@ -35,9 +35,9 @@ input[type=text],input[type=email] , textarea {
     color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-family: serif;
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 16px;
     min-height: 40px;
     outline: 0;
